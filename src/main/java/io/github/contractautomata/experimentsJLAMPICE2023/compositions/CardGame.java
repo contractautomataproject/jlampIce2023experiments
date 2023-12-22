@@ -104,4 +104,5 @@ public class CardGame {
 
         return  new Automaton<>(setTr);
     }
+
 }
