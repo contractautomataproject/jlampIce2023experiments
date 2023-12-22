@@ -9,13 +9,10 @@ This repository uses a branch of `CATLib` currently under development, imported 
 
 ### Composition Experiments
 
-The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023
-/compositions/CardGame.java` is used for producing the results in Table 1 (Comparison of different state-space reduction techniques for the card game).
+The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/compositions/CardGame.java` is used for producing the results in Table 1 (Comparison of different state-space reduction techniques for the card game).
 
 ### Orchestration Experiments
 
-The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023
-/orchestrations/CardGame.java` is used for producing the results in Table 2 (Comparison of different orchestrations for the card game).
+The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/orchestrations/CardGame.java` is used for producing the results in Table 2 (Comparison of different orchestrations for the card game).
 
-The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023
-/orchestrations/Railway.java` is used for producing the results in Table 3 (Comparison of different orchestrations for the railway example).
+The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/orchestrations/Railway.java` is used for producing the results in Table 3 (Comparison of different orchestrations for the railway example).
