@@ -55,6 +55,7 @@ public class CardGame {
 
         System.out.println("Composition with addressess and committed states:   states="+comp.getStates().size()+", transitions="+comp.getTransition().size());
              System.out.println("Orchestration with addressess and committed states: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
+        adc.exportMSCA(dir+"Table1_CompositionWithPruningAndCommittedStatesAndSymmetricReduction",comp);
 
 
         comp = new MSCACompositionFunction<>(List.of(dealer,player,player), t->new StrongAgreement().negate().test(t.getLabel())
@@ -66,6 +67,9 @@ public class CardGame {
         System.out.println("Composition no pruning  with  committed states:   states="+compNoPrun.getStates().size()+", transitions="+compNoPrun.getTransition().size());
         System.out.println("Orchestration with committed states: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
 
+        adc.exportMSCA(dir+"Table1_CompositionWithCommittedStates",compNoPrun);
+        adc.exportMSCA(dir+"Table1_CompositionWithPruningAndCommittedStates",comp);
+
 
         comp = new MSCACompositionFunction<>(List.of(dealerNoComm,player,player), t->new StrongAgreement().negate().test(t.getLabel())
         ).apply(Integer.MAX_VALUE);
@@ -76,7 +80,8 @@ public class CardGame {
         System.out.println("Composition no pruning:  states="+compNoPrun.getStates().size()+", transitions="+compNoPrun.getTransition().size());
         System.out.println("Orchestration with property: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
 
-
+        adc.exportMSCA(dir+"Table1_CompositionWithPruning",comp);
+        adc.exportMSCA(dir+"Table1_PlainComposition",compNoPrun);
     }
 
     private static Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>, Label<Action>>>  getProp() {

@@ -39,6 +39,7 @@ public class CardGame {
         elapsedTime = Duration.between(start, stop).toMillis();
         System.out.println("Splitting orchestration synthesis: " +elapsedTime + " milliseconds "+ f.apply(Objects.isNull(orc)));
         System.out.println("Splitting orchestration : states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
+        bdc.exportMSCA(dir+"Table2_SplittingOrchestration",orc);
 
         start = Instant.now();
         Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>,CALabel>> comp =
@@ -48,6 +49,7 @@ public class CardGame {
         elapsedTime = Duration.between(start, stop).toMillis();
         System.out.println("Conditional orchestration synthesis: " +elapsedTime + " milliseconds "+  f.apply(Objects.isNull(orc)));
         System.out.println("Conditional orchestration : states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
+        bdc.exportMSCA(dir+"Table2_ConditionalOrchestration",orc);
 
         start = Instant.now();
         comp =new MSCACompositionFunction<>(List.of(dealer,player,player), t->new StrongAgreement().negate().test(t.getLabel()) ).apply(Integer.MAX_VALUE);

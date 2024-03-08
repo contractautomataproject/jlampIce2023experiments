@@ -60,7 +60,7 @@ public class Railway {
         System.out.println("Splitting orchestration synthesis: " +elapsedTime + " milliseconds "+ f.apply(Objects.isNull(orc)));
         System.out.println("Splitting orchestration : states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
 
-        adc.exportMSCA(dir+"SplittingOrcTrain",orc);
+        adc.exportMSCA(dir+"Table3_SplittingOrchestration",orc);
 
 
         start = Instant.now();
@@ -73,7 +73,7 @@ public class Railway {
         elapsedTime = Duration.between(start, stop).toMillis();
         System.out.println("Conditional orchestration synthesis: " +elapsedTime + " milliseconds "+ f.apply(Objects.isNull(orc)));
         System.out.println("Conditional orchestration : states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
-        adc.exportMSCA(dir+"ConditionalOrcTrain",orc);
+        adc.exportMSCA(dir+"Table3_ConditionalOrchestration",orc);
 
         start = Instant.now();
         cf = new MSCACompositionFunction<>(list,
@@ -85,6 +85,8 @@ public class Railway {
         elapsedTime = Duration.between(start, stop).toMillis();
         System.out.println("Refined conditional orchestration synthesis: " +elapsedTime + " milliseconds "+ f.apply(Objects.isNull(orc)));
         System.out.println("Refined orchestration : states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
+        adc.exportMSCA(dir+"Table3_RefinedConditionalOrchestration",orc);
+
 
     }
 
