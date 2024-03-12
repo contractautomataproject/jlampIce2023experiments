@@ -10,6 +10,7 @@ This repository uses a branch of `CATLib` currently under development, imported 
 ### Composition Experiments
 
 The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/compositions/CardGame.java` is used for producing the results in Table 1 (Comparison of different state-space reduction techniques for the card game).
+
 Logs:
 CardGame Composition Example
 Composition with addressess and committed states: states=36, transitions=37 computed in 126 milliseconds
@@ -26,6 +27,7 @@ Orchestration with property: states=49, transitions=54 computed in 127 milliseco
 ### Orchestration Experiments
 
 The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/orchestrations/CardGame.java` is used for producing the results in Table 2 (Comparison of different orchestrations for the card game).
+
 Logs:
 CardGame Orchestration Example
 Splitting orchestration synthesis: 241 milliseconds the orchestration is non-empty
@@ -38,6 +40,7 @@ Refined conditional orchestration synthesis:  42 milliseconds the orchestration 
 
 
 The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/orchestrations/Railway.java` is used for producing the results in Table 3 (Comparison of different orchestrations for the railway example).
+
 Logs:
 Railway Orchestration Example
 Splitting orchestration synthesis: 207 milliseconds the orchestration is non-empty
