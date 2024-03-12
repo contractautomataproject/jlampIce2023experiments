@@ -14,6 +14,8 @@ import io.github.contractautomata.catlib.requirements.StrongAgreement;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +28,8 @@ public class CardGame {
         System.out.println("CardGame Composition Example");
 
         AutDataConverter<CALabel> adc = new AutDataConverter<>(CALabel::new);
+        Instant start, stop;
+        long elapsedTime;
 
         Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>, Label<Action>>> prop = getProp();
         Automaton<String, Action, State<String>, ModalTransition<String,Action,State<String>, CALabel>> dealerAddrComm =
@@ -44,44 +48,72 @@ public class CardGame {
                 adc.importMSCA(dir + "DealerNoComm.data");
 
 
+        start = Instant.now();
         Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>,CALabel>> comp =
                 new MSCACompositionFunction<>(List.of(dealerAddrComm,player1,player2), t->new StrongAgreement().negate().test(t.getLabel())
                 ).apply(Integer.MAX_VALUE);
-
-        Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>,CALabel>> compNoPrun;
-
-        Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>,CALabel>> orc =
-                new OrchestrationSynthesisOperator<String>(new StrongAgreement()).apply(comp);
-
-        System.out.println("Composition with addressess and committed states:   states="+comp.getStates().size()+", transitions="+comp.getTransition().size());
-             System.out.println("Orchestration with addressess and committed states: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
+        System.out.println("Composition with addressess and committed states: states="+comp.getStates().size()+", transitions="+comp.getTransition().size()+" computed in "+elapsedTime+" milliseconds");
         adc.exportMSCA(dir+"Table1_CompositionWithPruningAndCommittedStatesAndSymmetricReduction",comp);
 
 
+        start = Instant.now();
+        Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>,CALabel>> orc =
+                new OrchestrationSynthesisOperator<String>(new StrongAgreement()).apply(comp);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
+
+             System.out.println("Orchestration with addressess and committed states: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+" computed in "+elapsedTime+" milliseconds"+System.lineSeparator());
+
+        start = Instant.now();
         comp = new MSCACompositionFunction<>(List.of(dealer,player,player), t->new StrongAgreement().negate().test(t.getLabel())
                 ).apply(Integer.MAX_VALUE);
-        compNoPrun = new MSCACompositionFunction<>(List.of(dealer,player,player), t->false).apply(Integer.MAX_VALUE);
-        orc = new OrchestrationSynthesisOperator<String>(new StrongAgreement()).apply(comp);
-
-        System.out.println("Composition with committed states:   states="+comp.getStates().size()+", transitions="+comp.getTransition().size());
-        System.out.println("Composition no pruning  with  committed states:   states="+compNoPrun.getStates().size()+", transitions="+compNoPrun.getTransition().size());
-        System.out.println("Orchestration with committed states: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
-
-        adc.exportMSCA(dir+"Table1_CompositionWithCommittedStates",compNoPrun);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
+        System.out.println("Composition with committed states:   states="+comp.getStates().size()+", transitions="+comp.getTransition().size()+" computed in "+elapsedTime+" milliseconds");
         adc.exportMSCA(dir+"Table1_CompositionWithPruningAndCommittedStates",comp);
 
+        start = Instant.now();
+        Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>,CALabel>>  compNoPrun = new MSCACompositionFunction<>(List.of(dealer,player,player), t->false).apply(Integer.MAX_VALUE);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
 
+        System.out.println("Composition no pruning  with  committed states:   states="+compNoPrun.getStates().size()+", transitions="+compNoPrun.getTransition().size()+" computed in "+elapsedTime+" milliseconds");
+        adc.exportMSCA(dir+"Table1_CompositionWithCommittedStates",compNoPrun);
+
+        start = Instant.now();
+        orc = new OrchestrationSynthesisOperator<String>(new StrongAgreement()).apply(comp);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
+
+        System.out.println("Orchestration with committed states: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+" computed in "+elapsedTime+" milliseconds"+System.lineSeparator());
+
+
+        start = Instant.now();
         comp = new MSCACompositionFunction<>(List.of(dealerNoComm,player,player), t->new StrongAgreement().negate().test(t.getLabel())
         ).apply(Integer.MAX_VALUE);
-        compNoPrun = new MSCACompositionFunction<>(List.of(dealerNoComm,player,player), t->false).apply(Integer.MAX_VALUE);
-        orc = new OrchestrationSynthesisOperator<>(new StrongAgreement(),prop).apply(comp);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
 
-        System.out.println("Composition: states="+comp.getStates().size()+", transitions="+comp.getTransition().size());
-        System.out.println("Composition no pruning:  states="+compNoPrun.getStates().size()+", transitions="+compNoPrun.getTransition().size());
-        System.out.println("Orchestration with property: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+System.lineSeparator());
-
+        System.out.println("Composition: states="+comp.getStates().size()+", transitions="+comp.getTransition().size()+" computed in "+elapsedTime+" milliseconds");
         adc.exportMSCA(dir+"Table1_CompositionWithPruning",comp);
+
+        start = Instant.now();
+        compNoPrun = new MSCACompositionFunction<>(List.of(dealerNoComm,player,player), t->false).apply(Integer.MAX_VALUE);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
+
+        System.out.println("Composition no pruning:  states="+compNoPrun.getStates().size()+", transitions="+compNoPrun.getTransition().size()+" computed in "+elapsedTime+" milliseconds");
         adc.exportMSCA(dir+"Table1_PlainComposition",compNoPrun);
+
+        start = Instant.now();
+        orc = new OrchestrationSynthesisOperator<>(new StrongAgreement(),prop).apply(comp);
+        stop = Instant.now();
+        elapsedTime = Duration.between(start, stop).toMillis();
+
+        System.out.println("Orchestration with property: states="+orc.getStates().size()+", transitions="+orc.getTransition().size()+" computed in "+elapsedTime+" milliseconds"+System.lineSeparator());
+
     }
 
     private static Automaton<String,Action,State<String>,ModalTransition<String,Action,State<String>, Label<Action>>>  getProp() {
