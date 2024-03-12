@@ -13,8 +13,8 @@ The class `src/main/java/io/github/contractautomata/experimentsJLAMPICE2023/comp
 
 Logs:
 CardGame Composition Example
-Composition with addressess and committed states: states=36, transitions=37 computed in 126 milliseconds
-Orchestration with addressess and committed states: states=24, transitions=23 computed in 84 milliseconds
+Composition with addresses and committed states: states=36, transitions=37 computed in 126 milliseconds
+Orchestration with addresses and committed states: states=24, transitions=23 computed in 84 milliseconds
 
 Composition with committed states:   states=73, transitions=82 computed in 82 milliseconds
 Composition no pruning  with  committed states:   states=177, transitions=224 computed in 137 milliseconds
